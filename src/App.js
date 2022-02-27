@@ -1,10 +1,12 @@
-import AddUrl from "./Components/ShortenUrl/AddUrl";
+import { Route, Routes } from 'react-router-dom';
+import AddNewUrlPage from "./Pages/AddNewUrl";
 
 function App() {
   return (
     <div>
-      <div>Shorten your URL now!!!</div><br/>
-      <AddUrl/>
+      <Routes>
+      <Route path='/add' element={<AddNewUrlPage />}/>
+      </Routes>
     </div>
   );
 };
