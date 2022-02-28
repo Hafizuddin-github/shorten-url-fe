@@ -1,8 +1,14 @@
+import { Route, Routes } from 'react-router-dom';
+import AddNewUrlPage from "./Pages/AddNewUrl";
 
 function App() {
   return (
-    <div>Hello</div>
+    <div>
+      <Routes>
+      <Route path='/add' element={<AddNewUrlPage />}/>
+      </Routes>
+    </div>
   );
-}
+};
 
 export default App;
