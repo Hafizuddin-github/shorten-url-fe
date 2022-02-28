@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 const RedirectUrlPage = props => {
 
     const {shortenUrl} = useParams();
-    const apiCall = 'http://localhost:8080/api/shorten-service/v1/url?url='+ [shortenUrl];
-    console.log(apiCall);
+    const apiCall = 'https://shielded-castle-62695.herokuapp.com/api/shorten-service/v1/url?url='+ [shortenUrl];
+    const [isLoading, setIsLoading] = useState(true);
 
     const requestOptions = {
         method: 'GET',
@@ -15,13 +15,26 @@ const RedirectUrlPage = props => {
         }
     };
     fetch(apiCall, requestOptions)
-        .then(response => response.json())
-        .then(data => window.location.href = data.url);
+        .then(response => {
+            if (response.ok) {
+                return response.json()
+            } else if(response.status === 404) {
+                setIsLoading(false);
+                return Promise.reject('Error 404')
+            }
+        })
+        .then(data => {
+            setIsLoading(false);
+            window.location.href = data.url;
+        })
+        .catch(error => {
+            console.log('Error is', error);
+            setIsLoading(false);
+            window.location.href = "/not-found";
+        });
 
     return (
-        <div>
-            {shortenUrl}
-        </div>
+        <div class="loading loading--full-height" style={isLoading ? {} : { display: 'none' }}></div>
     );
 }
 
