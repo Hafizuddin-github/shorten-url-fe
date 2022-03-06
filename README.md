@@ -4,6 +4,8 @@
 ## Domain
  - https://fast-shelf-14735.herokuapp.com/
 ## Routes
-- https://fast-shelf-14735.herokuapp.com/add
+#### Add new url to shorten
+- https://fast-shelf-14735.herokuapp.com 
+#### Enter shorten code to redirect to actual URL
 - https://fast-shelf-14735.herokuapp.com/{shorten-code}
  

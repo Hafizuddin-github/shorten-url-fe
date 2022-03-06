@@ -7,7 +7,7 @@ function App() {
   return (
     <div>
       <Routes>
-      <Route path='/add' element={<AddNewUrlPage />}/>
+      <Route path='' element={<AddNewUrlPage />}/>
       <Route path='/:shortenUrl' element={<RedirectUrlPage />}/>
       <Route path='/not-found' element={<NotFound />}/>
       </Routes>
