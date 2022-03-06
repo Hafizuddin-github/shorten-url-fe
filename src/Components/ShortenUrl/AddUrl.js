@@ -6,6 +6,8 @@ const AddUrl = props => {
     const [shortenUrl, setshortenUrl] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isCopied, setIsCopied] = useState(false);
+    const [hasError, setHasError] = useState(false);
+
 
     async function copyTextToClipboard(text) {
         if ('clipboard' in navigator) {
@@ -32,6 +34,7 @@ const AddUrl = props => {
 
     const addUrlHandler = (event) => {
         event.preventDefault();
+        setshortenUrl("");
         setIsLoading(true);
         const resquestBody = {
             url: enteredUrl
@@ -51,11 +54,18 @@ const AddUrl = props => {
             .then(data => {
                 setshortenUrl(data.shortenUrl);
                 setIsLoading(false);
+                setHasError(false);
+            })
+            .catch(error => {
+                console.log('Error is', error);
+                setIsLoading(false);
+                setHasError(true);
             });
     };
 
     return (
     <div>
+        <div style={hasError ? {} : { display: 'none' }}>Error has occured. Please check if the URL is in valid format!</div>
         <form onSubmit={addUrlHandler}>
             <label htmlFor="url">Url to shorten: </label>
             <input type="text" id="url" value={enteredUrl} onChange={urlChangedHandler}/><br/>
@@ -67,7 +77,7 @@ const AddUrl = props => {
             <label htmlFor="url">Shorten URL: </label>
             <input htmlFor="shortenUrl" id="shortenUrl" value={shortenUrl} disabled></input>
         </div>
-        <button onClick={copyClickHandler}>
+        <button onClick={copyClickHandler} style={hasError ? { display: 'none' } : {}}>
             <span>{isCopied ? 'Copied!' : 'Copy'}</span>
         </button>
     </div>
