@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 const RedirectUrlPage = props => {
 
     const {shortenUrl} = useParams();
-    const apiCall = 'https://shielded-castle-62695.herokuapp.com/api/shorten-service/v1/url/'+ [shortenUrl];
+    const apiCall = process.env.BE_URL + '/api/shorten-service/v1/url/'+ [shortenUrl];
     const [isLoading, setIsLoading] = useState(true);
 
     const requestOptions = {
