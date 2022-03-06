@@ -46,7 +46,7 @@ const AddUrl = props => {
                 'Access-Control-Allow-Origin': '*'
             }
         };
-        fetch('https://shielded-castle-62695.herokuapp.com/api/shorten-service/v1/url', requestOptions)
+        fetch(process.env.BE_URL + '/api/shorten-service/v1/url', requestOptions)
             .then(response => response.json())
             .then(data => {
                 setshortenUrl(data.shortenUrl);
