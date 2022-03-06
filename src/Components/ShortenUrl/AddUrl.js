@@ -5,7 +5,26 @@ const AddUrl = props => {
     const [enteredUrl, setEnteredUrl] = useState('');
     const [shortenUrl, setshortenUrl] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [isCopied, setIsCopied] = useState(false);
 
+    async function copyTextToClipboard(text) {
+        if ('clipboard' in navigator) {
+            return await navigator.clipboard.writeText(text);
+        } else {
+            return document.execCommand('copy', true, text);
+        }
+    }
+    
+    const copyClickHandler = () => {
+        copyTextToClipboard(shortenUrl).then(() => {
+            setIsCopied(true);
+            setTimeout(() => {
+                setIsCopied(false);
+            }, 1500);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
 
     const urlChangedHandler = (event) => {
         setEnteredUrl(event.target.value)
@@ -48,6 +67,9 @@ const AddUrl = props => {
             <label htmlFor="url">Shorten URL: </label>
             <input htmlFor="shortenUrl" id="shortenUrl" value={shortenUrl} disabled></input>
         </div>
+        <button onClick={copyClickHandler}>
+            <span>{isCopied ? 'Copied!' : 'Copy'}</span>
+        </button>
     </div>
     );
 };
